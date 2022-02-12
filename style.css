@@ -1,0 +1,63 @@
+.bubble {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+
+    position: absolute;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    flex-direction: column;
+    /* disable text selection */
+    user-select: none;
+}
+
+
+.ticker {
+    /* display: table; */
+    /* margin: auto auto; */
+}
+
+.wall {
+    /* background: red; */
+    position: absolute;
+}
+
+html, body {
+    position: relative; 
+    height: 100%;
+    background: #222;
+    font-family: Trebuchet MS,roboto,ubuntu,sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bubble-content {
+    text-align: center;
+}
+
+.percent {
+    font-size: 0.6em;
+    line-height: 0.9em;
+}
+
+.bubble img {
+    width: 20%;
+}
+
+.logo-letter {
+    background: #4c4848;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    /* font-size: 1.5em; */
+    font-weight: bold;
+    text-transform: uppercase;
+}
