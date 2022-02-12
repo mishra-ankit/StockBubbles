@@ -44,7 +44,7 @@ function createBubbleUI(tickerInfo, index) {
     `;
 
     const logoDimension = `${showTickerText ? '20%' : '55%'}`;
-    const logoStyle = `style="width: ${logoDimension}; height: ${logoDimension};"`;
+    const logoStyle = `style="width: ${logoDimension}; height: ${logoDimension}; border-radius: 50%;"`;
 
     const logoContent = `<img ${logoStyle} src="${tickerInfo.logo}" />`;
 
@@ -66,18 +66,30 @@ window.addEventListener('resize', () => {
     renderWallsMatterJs(runningState.world, canvasWidth, canvasHeight);
 });
 
-window.addEventListener('load', start);
+window.addEventListener('load', domLoaded);
 
 setInterval(start, REFRESH_INTERVAL);
 
-async function start() {
+function domLoaded() {
+    start();
+}
+
+async function start(mode) {
     document.getElementById("bubbleContainer").innerHTML = ''
-    await updateData();
+
+    if(!mode) {
+        const modeDropdown = document.getElementById("mode");
+        mode = modeDropdown.value;
+        modeDropdown.addEventListener("change", () => {
+            mode = modeDropdown.value;
+            start(mode);
+        }); 
+    }
+
+    await updateData(mode);
 
     var canvasWidth = viewportSize.getWidth();
     var canvasHeight = viewportSize.getHeight();
-
-    // renderWallsUI(canvasWidth, canvasHeight);
 
     tickerData = tickerData.map((item) => ({
         ...item,
@@ -88,13 +100,12 @@ async function start() {
 
     tickerData = tickerData.map(item => ({
         ...item,
-        scaledRadius: item.radius * scale
+        scaledRadius: getScaledRadius(item, scale)
     }));
 
     addBubbleDivs();
 
     fitty('.fitty');
-    // fitty('.fitty-letter');
 
     const engine = Matter.Engine.create();
     runningState.world = engine.world;
@@ -103,14 +114,12 @@ async function start() {
     const bubbles = [];
     const bubblesBodies = [];
 
-    // useMatterJSRender(engine, canvasWidth, canvasHeight);
-
     for (let i = 0; i < tickerData.length; i++) {
         const bubbleId = `bubble${i}`;
         const bubbleRadius = tickerData[i].scaledRadius;
         const bubbleDiameter = bubbleRadius * 2;
-        let bubbleX = getRandomIntInRange(bubbleDiameter, canvasWidth - bubbleDiameter);
-        let bubbleY = getRandomIntInRange(bubbleDiameter, canvasHeight - bubbleDiameter);
+        let bubbleX = getRandomIntInRange(bubbleDiameter, canvasWidth - bubbleDiameter - 100);
+        let bubbleY = getRandomIntInRange(bubbleDiameter, canvasHeight - bubbleDiameter - 100);
         const bubble = {
             body: Matter.Bodies.circle(bubbleX, bubbleY, bubbleRadius,
                 {
@@ -122,7 +131,7 @@ async function start() {
                 this.elem.style.top = `${y - bubbleRadius}px`;
                 this.elem.style.left = `${x - bubbleRadius}px`;
 
-                // applyRandomForce(this.body);
+                applyRandomForce(this.body);
                 limitMaxVelocity(this.body);
             }
         };

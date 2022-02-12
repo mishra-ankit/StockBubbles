@@ -1,16 +1,34 @@
 let tickerData = [];
 
 function getNormalizedRadius(item, data) {
-    const max = Math.abs(data[0].changePercent);
-    const min = Math.abs(data[data.length - 1].changePercent);
-    const changePercent = Math.abs(item.changePercent);
+    // find the 50th percentile
+    const median = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length / 2)];
 
-    let normlialized = (((changePercent - min) / (max - min)) * (MAX_RADIUS - MIN_RADIUS)) + MIN_RADIUS;
-    normlialized = normlialized ? normlialized : MIN_RADIUS;
+    // find the inter quartile range
+    const q1 = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length / 4)];
+    const q3 = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length * 3 / 4)];
+    const iqr = q3 - q1;
+
+    const changePercent = Math.abs(item.changePercent);
+    let normlialized = (((changePercent - median) / iqr));// * (MAX_RADIUS - MIN_RADIUS)) + MIN_RADIUS;
+    // normlialized = normlialized ? normlialized : MIN_RADIUS;
+
     return normlialized;
 }
 
-async function updateData() {
+async function updateData(mode) {
+    if(mode === TOP_GAINERS) {
+        tickerData = await getData(TOP_GAINERS_URL);
+    } else if(mode === TOP_LOOSERS) {
+        tickerData = await getData(TOP_LOOSERS_URL);
+    } else if(mode === BOTH5050) {
+        const topGainers = (await getData(TOP_GAINERS_URL)).slice(0, 50);
+        const topLosers = (await getData(TOP_LOOSERS_URL)).slice(0, 50);
+        tickerData = topGainers.concat(topLosers);
+    }
+}
+
+async function getData(url) {
     const cors_proxy = "https://cors-apni.herokuapp.com/";
     const data = [];
 
@@ -18,7 +36,7 @@ async function updateData() {
     headers.append('pragma', 'no-cache');
     headers.append('cache-control', 'no-cache');
 
-    let response = await fetch(`${cors_proxy}https://www.tradingview.com/markets/stocks-usa/market-movers-gainers/`, {
+    let response = await fetch(`${cors_proxy}${url}`, {
         method: 'GET',
         headers,
     }).then(response => response.text());
@@ -46,5 +64,5 @@ async function updateData() {
             logo
         });
     }
-    tickerData = data;
+    return data;
 }

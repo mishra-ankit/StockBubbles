@@ -36,6 +36,17 @@ function getScale(tickerData, screenWidth, screenHeight) {
     return scale
 }
 
+function getScaledRadius(item, scale) {
+    var scaledRadius = item.radius * scale;
+    if(scaledRadius < MIN_RADIUS) {
+        scaledRadius = MIN_RADIUS;
+    }
+    if(scaledRadius > MAX_RADIUS) {
+        scaledRadius = MAX_RADIUS;
+    }
+    return scaledRadius;
+}
+
 /**
  * @param {String} HTML representing a single element
  * @return {Element}
