@@ -39,19 +39,26 @@ function useMatterJSRender(engine, canvasWidth, canvasHeight) {
     Matter.Render.run(render);
 }
 
+function getTopWallHeight() {
+    const topBar = document.getElementById('topBar');
+    return topBar.offsetHeight;
+}
+
 function renderWallsUI(canvasWidth, canvasHeight) {
     canvasWidth = canvasWidth - 10;
     canvasHeight = canvasHeight - 10;
-    console.log("rendering walls");
-    var topWall = document.getElementById('topWall');
-    var bottomWall = document.getElementById('bottomWall');
-    var leftWall = document.getElementById('leftWall');
-    var rightWall = document.getElementById('rightWall');
+    
+    const topWall = document.getElementById('topWall');
+    const bottomWall = document.getElementById('bottomWall');
+    const leftWall = document.getElementById('leftWall');
+    const rightWall = document.getElementById('rightWall');
+
+    
 
     topWall.style.top = 0;
     topWall.style.left = 0;
     topWall.style.width = canvasWidth;
-    topWall.style.height = WALL_WIDTH;
+    topWall.style.height = getTopWallHeight();
 
     bottomWall.style.top = canvasHeight - WALL_WIDTH;
     bottomWall.style.left = 0;
@@ -80,30 +87,10 @@ function renderWallsMatterJs(world, canvasWidth, canvasHeight) {
             fillStyle: 'red',
         }
     }
-    var topWall = Matter.Bodies.rectangle(posX, 0, width, WALL_WIDTH * 2, {
-        isStatic: true,
-        render: {
-            fillStyle: 'red',
-        }
-    });
-    var bottomWall = Matter.Bodies.rectangle(posX, canvasHeight - WALL_WIDTH, width, WALL_WIDTH, {
-        isStatic: true,
-        render: {
-            fillStyle: 'blue',
-        }
-    });
-    var leftWall = Matter.Bodies.rectangle(0, posY, WALL_WIDTH, height, {
-        isStatic: true,
-        render: {
-            fillStyle: 'green',
-        }
-    });
-    var rightWall = Matter.Bodies.rectangle(canvasWidth - WALL_WIDTH, posY, WALL_WIDTH, height, {
-        isStatic: true,
-        render: {
-            fillStyle: 'yellow',
-        }
-    });
+    const topWall = Matter.Bodies.rectangle(posX, 0, width, getTopWallHeight() * 2, wallOption);
+    const bottomWall = Matter.Bodies.rectangle(posX, canvasHeight - WALL_WIDTH, width, WALL_WIDTH, wallOption);
+    const leftWall = Matter.Bodies.rectangle(0, posY, WALL_WIDTH, height, wallOption);
+    const rightWall = Matter.Bodies.rectangle(canvasWidth - WALL_WIDTH, posY, WALL_WIDTH, height, wallOption);
 
     let existingWallsComposite;
     if (runningState.existingWallsCompositeId) {

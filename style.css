@@ -66,4 +66,10 @@ html, body {
     height:5%;
     width: 100%;
     background: #4c4848;
+    text-align: right;
+}
+
+#mode {
+    height: 100%;
+    margin-right: 10px;
 }
