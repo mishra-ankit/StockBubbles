@@ -68,23 +68,21 @@ window.addEventListener('resize', () => {
 
 window.addEventListener('load', domLoaded);
 
-setInterval(start, REFRESH_INTERVAL);
-
 function domLoaded() {
-    start();
+    const modeDropdown = document.getElementById("mode");
+    mode = modeDropdown.value;
+    modeDropdown.addEventListener("change", () => {
+        mode = modeDropdown.value;
+        start(mode);
+    });
+
+    setInterval(() => start(modeDropdown.value), REFRESH_INTERVAL);
+
+    start(mode);
 }
 
 async function start(mode) {
     document.getElementById("bubbleContainer").innerHTML = ''
-
-    if(!mode) {
-        const modeDropdown = document.getElementById("mode");
-        mode = modeDropdown.value;
-        modeDropdown.addEventListener("change", () => {
-            mode = modeDropdown.value;
-            start(mode);
-        }); 
-    }
 
     await updateData(mode);
 
@@ -141,7 +139,7 @@ async function start(mode) {
         bubblesBodies.push(bubble.body);
     }
 
-    const mouse = Matter.Mouse.create(document.body);
+    const mouse = Matter.Mouse.create(document.getElementById('physicalWorld'));
     const mouseConstraint = Matter.MouseConstraint.create(engine, {
         mouse: mouse,
         constraint: {

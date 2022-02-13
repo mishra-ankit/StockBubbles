@@ -5,7 +5,7 @@
     <title>StocksBubbles</title>
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/matter-attractors@0.1.6/build/matter-attractors.min.js"></script>
 
@@ -19,11 +19,13 @@
             <option value="both5050">50-50</option>
         </select>
     </div>
-    <div id="topWall" class="wall"></div>
-    <div id="leftWall" class="wall"></div>
-    <div id="rightWall" class="wall"></div>
-    <div id="bottomWall" class="wall"></div>
-    <div id="bubbleContainer"></div>
+    <div id="physicalWorld">
+        <div id="topWall" class="wall"></div>
+        <div id="leftWall" class="wall"></div>
+        <div id="rightWall" class="wall"></div>
+        <div id="bottomWall" class="wall"></div>
+        <div id="bubbleContainer"></div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fitty/2.2.6/fitty.min.js"
         integrity="sha512-KkWBcUQjpR0NMNLytOBHfEqSF0urYJMXGRU/dzQxa+HQ4zak1gRSoegRvRnUcCFWBPcDIlLU7tBY8o7+bIkvWA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
