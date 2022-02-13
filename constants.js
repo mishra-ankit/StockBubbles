@@ -1,6 +1,6 @@
 
 const WALL_WIDTH = 20;
-const MIN_RADIUS = 20;
+const MIN_RADIUS = 10;
 const MAX_RADIUS = 200;
 const MIN_SCALE = .1;
 const MAX_SCALE = 1000;

@@ -136,13 +136,17 @@ async function start(mode) {
         const bubble = {
             body: Matter.Bodies.circle(bubbleX, bubbleY, bubbleRadius,
                 {
-                    density: bubbleRadius,
+                    density: (1 / bubbleRadius) * 800,
                 }),
             elem: document.getElementById(bubbleId),
             render() {
                 const { x, y } = this.body.position;
                 this.elem.style.top = `${y - bubbleRadius}px`;
                 this.elem.style.left = `${x - bubbleRadius}px`;
+
+                // get weight of body
+                // const weight = this.body.mass * this.body.density;
+                // console.log(weight);
 
                 applyRandomForce(this.body);
                 limitMaxVelocity(this.body);
