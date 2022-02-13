@@ -25,7 +25,7 @@ function addBubbleDivs() {
     tickerData.forEach((tickerInfo, index) => {
         const bubbleDiv = createBubbleUI(tickerInfo, index);
 
-        bubbleDiv.addEventListener("touchstart", (e) => handleBubbleClick(e, tickerInfo));
+        bubbleDiv.addEventListener("touchend", (e) => handleBubbleClick(e, tickerInfo));
         bubbleDiv.addEventListener("click", (e) => handleBubbleClick(e, tickerInfo));
 
         bubbleContainer.appendChild(bubbleDiv);

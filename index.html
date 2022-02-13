@@ -13,14 +13,14 @@
 </head>
 
 <body>
-    <div id="topBar">
-        <select name="mode" id="mode">
+    <nav id="topBar">
+          <select name="mode" id="mode">
             <option value="topGainers">Top Gainers</option>
             <option value="topLoosers">Top Loosers</option>
             <option value="both5050">50-50</option>
         </select>
-    </div>
-
+        <li onClick="toggleModal(event, 'about-modal')"><a href="#" class="outline">About</a></li>
+      </nav>
     <!-- Button to trigger the modal -->
     <!-- <button class="contrast"
     data-target="modal-example"
@@ -28,23 +28,42 @@
         Launch demo modal
     </button> -->
 
+    <dialog id="about-modal">
+        <article>
+            <a href="#close"
+            aria-label="Close"
+            class="close"
+            onClick="toggleModal(event, 'about-modal')">
+            </a>
+            <h3>StocksBubbles</h3>
+            <p>StocksBubbles is fun project to see stocks in bubble (no pun intended). Inspired by <a href="https://cryptobubbles.net/">cryptobubbles.net</a>, <a href="https://www.tradingview.com">tradingview.com</a></p>
+            <footer>
+            <a href="#close"
+                role="button"
+                onClick="toggleModal(event, 'about-modal')">
+                Close
+            </a>
+            </footer>
+        </article>
+    </dialog>
+
     <!-- Modal -->
     <dialog id="info-modal">
-    <article>
-        <a href="#close"
-        aria-label="Close"
-        class="close"
-        onClick="toggleModal(event, 'info-modal')">
-        </a>
-        <div id="modal-content"></div>
-        <footer>
-        <a href="#close"
-            role="button"
+        <article>
+            <a href="#close"
+            aria-label="Close"
+            class="close"
             onClick="toggleModal(event, 'info-modal')">
-            Close
-        </a>
-        </footer>
-    </article>
+            </a>
+            <div id="modal-content"></div>
+            <footer>
+            <a href="#close"
+                role="button"
+                onClick="toggleModal(event, 'info-modal')">
+                Close
+            </a>
+            </footer>
+        </article>
     </dialog>
 
     <div id="physicalWorld">
