@@ -1,21 +1,5 @@
 let tickerData = [];
 
-function getNormalizedRadius(item, data) {
-    // find the 50th percentile
-    const median = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length / 2)];
-
-    // find the inter quartile range
-    const q1 = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length / 4)];
-    const q3 = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length * 3 / 4)];
-    const iqr = q3 - q1;
-
-    const changePercent = Math.abs(item.changePercent);
-    let normlialized = (((changePercent - median) / iqr));// * (MAX_RADIUS - MIN_RADIUS)) + MIN_RADIUS;
-    // normlialized = normlialized ? normlialized : MIN_RADIUS;
-
-    return normlialized;
-}
-
 async function updateData(mode) {
     if(mode === TOP_GAINERS) {
         tickerData = await getData(TOP_GAINERS_URL);
@@ -59,10 +43,12 @@ async function getData(url) {
 
         data.push({
             ticker,
-            changePercent: changePercent.substring(0, changePercent.length - 1),
-            radius: changePercent,
+            changePercent: parseFloat(changePercent.substring(0, changePercent.length - 1)),
+            radius: parseFloat(changePercent),
             logo
         });
     }
-    return data;
+
+    // remove impactical changePercent
+    return data.filter(i => i.changePercent < 10000);
 }

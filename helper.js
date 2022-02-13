@@ -16,6 +16,23 @@ function shuffleArray(array) {
     }
 }
 
+function getNormalizedRadius(item, data) {
+    // https://machinelearningmastery.com/robust-scaler-transforms-for-machine-learning/
+    // find the 50th percentile
+    const median = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length / 2)];
+
+    // find the inter quartile range
+    const q1 = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length / 4)];
+    const q3 = data.map(x => x.changePercent).sort((a, b) => a - b)[Math.floor(data.length * 3 / 4)];
+    const iqr = q3 - q1;
+
+    const changePercent = Math.abs(item.changePercent);
+    let normlialized = (((changePercent - median) / iqr));// * (MAX_RADIUS - MIN_RADIUS)) + MIN_RADIUS;
+    // normlialized = normlialized ? normlialized : MIN_RADIUS;
+
+    return normlialized;
+}
+
 function getScale(tickerData, screenWidth, screenHeight) {
     const availableArea = screenWidth * screenHeight;
     const targetFreeArea = availableArea * TARGET_FREE_AREA_FRACTION;

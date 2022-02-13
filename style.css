@@ -1,7 +1,6 @@
 .bubble {
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
     border-radius: 50%;
+    cursor: pointer;
 
     position: absolute;
 
@@ -12,6 +11,11 @@
     flex-direction: column;
     /* disable text selection */
     user-select: none;
+    
+}
+
+.bubble:hover {
+    border: 3px solid white;
 }
 
 
@@ -41,6 +45,10 @@ html, body {
     text-align: center;
 }
 
+.ticker {
+    line-height: 0.9em;
+}
+
 .percent {
     font-size: 0.6em;
     line-height: 0.9em;
@@ -63,13 +71,18 @@ html, body {
 }
 
 #topBar {
-    height:5%;
-    width: 100%;
+    /* height:5%; */
+    /* width: 100%;
+    
+    text-align: right; */
     background: #4c4848;
-    text-align: right;
 }
 
 #mode {
-    height: 100%;
-    margin-right: 10px;
+    /* height: 100%;
+    margin-right: 10px; */
+}
+
+#topBar select {
+    margin-bottom: 0;
 }

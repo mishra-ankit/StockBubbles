@@ -3,15 +3,30 @@ const runningState = {
     existingWallsCompositeId: 0
 };
 
-function addBubbleDivs() {
+function handleBubbleClick(e, info) {
+    // console.log(e.target);
+    setModalContent(info);
+    toggleModal(e, 'info-modal');
+}
 
+function setModalContent(info) {
+    const modelConent = document.getElementById("modal-content");
+    const content = `
+    <div>
+        <h3>${info.ticker}</h3>
+        <p>Change percentage - ${info.changePercent}%</p>
+    </div>
+    `;
+    modelConent.innerHTML = content;
+}
+
+function addBubbleDivs() {
     const bubbleContainer = document.getElementById("bubbleContainer");
     tickerData.forEach((tickerInfo, index) => {
         const bubbleDiv = createBubbleUI(tickerInfo, index);
 
-        bubbleDiv.addEventListener("click", () => {
-            console.log("clicked");
-        });
+        bubbleDiv.addEventListener("touchstart", (e) => handleBubbleClick(e, tickerInfo));
+        bubbleDiv.addEventListener("click", (e) => handleBubbleClick(e, tickerInfo));
 
         bubbleContainer.appendChild(bubbleDiv);
 
@@ -39,7 +54,7 @@ function createBubbleUI(tickerInfo, index) {
     const showTickerText = tickerInfo.scaledRadius > 35;
 
     const tickerContent = `
-        <div>${tickerInfo.ticker}</div>
+        <div class="ticker">${tickerInfo.ticker}</div>
         <div class="percent">${changePercent}%</div>
     `;
 
@@ -50,7 +65,7 @@ function createBubbleUI(tickerInfo, index) {
 
     const logoLetter = showTickerText ? '' : `<div class="logo-letter" ${logoStyle}><div class="fitty-letter">${tickerInfo.ticker.charAt(0)}</div></div>`;
 
-    return htmlToElement(`<div class="bubble" id="bubble${index}">
+    return htmlToElement(`<div class="bubble" id="bubble${index}" data-target="info-modal">
             ${tickerInfo.logo ? logoContent : logoLetter}
             <div class="bubble-content" style="width: ${edge}px;">
                 <div class="fitty">${showTickerText ? tickerContent : ''}</div>

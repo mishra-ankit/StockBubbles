@@ -3,7 +3,7 @@
 
 <head>
     <title>StocksBubbles</title>
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
@@ -19,6 +19,33 @@
             <option value="both5050">50-50</option>
         </select>
     </div>
+
+    <!-- Button to trigger the modal -->
+    <!-- <button class="contrast"
+    data-target="modal-example"
+    onClick="toggleModal(event)">
+        Launch demo modal
+    </button> -->
+
+    <!-- Modal -->
+    <dialog id="info-modal">
+    <article>
+        <a href="#close"
+        aria-label="Close"
+        class="close"
+        onClick="toggleModal(event, 'info-modal')">
+        </a>
+        <div id="modal-content"></div>
+        <footer>
+        <a href="#close"
+            role="button"
+            onClick="toggleModal(event, 'info-modal')">
+            Close
+        </a>
+        </footer>
+    </article>
+    </dialog>
+
     <div id="physicalWorld">
         <div id="topWall" class="wall"></div>
         <div id="leftWall" class="wall"></div>
@@ -31,6 +58,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="constants.js"></script>
     <script src="viewport.js"></script>
+    <script src="modal.js"></script>
     <script src="helper.js"></script>
     <script src="scrapperHelper.js"></script>
     <script src="matterJsHelper.js"></script>
