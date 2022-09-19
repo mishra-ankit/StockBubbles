@@ -11,6 +11,7 @@ const POSITIVE_SHADOW_COLOR = '14D414';
 const NEGATIVE_SHADOW_COLOR = 'D40707';
 const REFRESH_INTERVAL = 1000 * 60;
 
+const PROXY_URL = "https://proxy-83ahdn15qosd.runkit.sh/";
 const TOP_LOOSERS_URL = "https://www.tradingview.com/markets/stocks-usa/market-movers-losers/"
 const TOP_GAINERS_URL = "https://www.tradingview.com/markets/stocks-usa/market-movers-gainers/"
 const TOP_GAINERS = "topGainers";

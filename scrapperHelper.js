@@ -13,21 +13,20 @@ async function updateData(mode) {
 }
 
 async function getData(url) {
-    const cors_proxy = "https://cors-apni.herokuapp.com/";
     const data = [];
 
     var headers = new Headers();
     headers.append('pragma', 'no-cache');
     headers.append('cache-control', 'no-cache');
 
-    let response = await fetch(`${cors_proxy}${url}`, {
+    let response = await fetch(`${PROXY_URL}?url=${url}`, {
         method: 'GET',
         headers,
     }).then(response => response.text());
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(response, "text/html");
-    const container = doc.getElementById("js-screener-container");
+    const container = doc.getElementsByClassName("screener-markets-page-container")[0];
     const table = container.getElementsByTagName("table")[0];
     const tableBody = table.getElementsByTagName("tbody")[0];
     const tableRows = tableBody.getElementsByTagName("tr");
@@ -43,7 +42,7 @@ async function getData(url) {
 
         data.push({
             ticker,
-            changePercent: parseFloat(changePercent.substring(0, changePercent.length - 1)),
+            changePercent: getPercentValue(changePercent),
             radius: parseFloat(changePercent),
             logo
         });
@@ -51,4 +50,10 @@ async function getData(url) {
 
     // remove impactical changePercent
     return data.filter(i => i.changePercent < 10000);
+}
+
+function getPercentValue(percentString) {
+    // Sometime getting the wierd minus (-) sign, hence needs to replace.
+    var percentValue = percentString.substring(0, percentString.length - 1).replace('−', '-');
+    return parseFloat(percentValue);
 }
